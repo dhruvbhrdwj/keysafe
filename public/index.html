@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Key Safe</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Secure Local Vault</p>
+          <h1>Key Safe</h1>
+        </div>
+        <p id="status-pill" class="status-pill">Checking vault status...</p>
+      </header>
+
+      <main class="content">
+        <section id="auth-view" class="panel hidden"></section>
+
+        <section id="vault-view" class="panel hidden">
+          <div class="toolbar">
+            <label class="search-wrap">
+              <span>Search</span>
+              <input
+                id="search-input"
+                type="search"
+                placeholder="Find by name, provider, env, tag..."
+                autocomplete="off"
+              />
+            </label>
+            <div class="toolbar-actions">
+              <button id="new-key-btn" class="btn btn-primary" type="button">
+                New Key
+              </button>
+              <button id="lock-btn" class="btn btn-muted" type="button">Lock</button>
+            </div>
+          </div>
+
+          <div id="entry-list" class="entry-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="key-dialog" class="modal">
+      <form id="key-form" method="dialog">
+        <div class="modal-head">
+          <h2 id="modal-title">Add key</h2>
+          <button id="modal-close" type="button" class="btn btn-ghost">Close</button>
+        </div>
+
+        <div class="grid">
+          <label>
+            Name
+            <input id="field-name" name="name" required maxlength="80" />
+          </label>
+          <label>
+            Provider
+            <input id="field-provider" name="provider" maxlength="80" />
+          </label>
+          <label>
+            Environment
+            <input
+              id="field-environment"
+              name="environment"
+              placeholder="dev / prod / staging"
+              maxlength="50"
+            />
+          </label>
+          <label>
+            Tags (comma separated)
+            <input id="field-tags" name="tags" placeholder="payments, backend" />
+          </label>
+        </div>
+
+        <label>
+          Secret value
+          <textarea id="field-secret" name="secret" rows="5" required></textarea>
+        </label>
+
+        <label>
+          Notes
+          <textarea id="field-notes" name="notes" rows="3" maxlength="500"></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button id="save-key-btn" class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

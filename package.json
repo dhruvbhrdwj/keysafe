@@ -1,0 +1,20 @@
+{
+  "name": "key-manager",
+  "version": "1.0.0",
+  "description": "Local encrypted key manager",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "quickstart": "./scripts/keysafe.sh start",
+    "backup": "./scripts/keysafe.sh backup-now",
+    "setup:backup-passphrase": "./scripts/keysafe.sh set-backup-passphrase",
+    "setup:launchd": "./scripts/keysafe.sh install-launchd",
+    "teardown:launchd": "./scripts/keysafe.sh uninstall-launchd"
+  },
+  "keywords": [
+    "security",
+    "key-manager",
+    "vault"
+  ],
+  "license": "MIT"
+}
