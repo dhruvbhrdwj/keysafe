@@ -25,6 +25,7 @@ const providerField = document.getElementById("field-provider");
 const environmentField = document.getElementById("field-environment");
 const tagsField = document.getElementById("field-tags");
 const secretField = document.getElementById("field-secret");
+const secretHelp = document.getElementById("field-secret-help");
 const notesField = document.getElementById("field-notes");
 
 async function api(path, options = {}) {
@@ -250,6 +251,9 @@ function openNewDialog() {
   modalTitle.textContent = "Add key";
   keyForm.reset();
   environmentField.value = "dev";
+  secretField.required = true;
+  secretField.placeholder = "";
+  secretHelp.classList.add("hidden");
   dialog.showModal();
 }
 
@@ -265,6 +269,9 @@ function openEditDialog(id) {
   environmentField.value = entry.environment || "";
   tagsField.value = (entry.tags || []).join(", ");
   secretField.value = "";
+  secretField.required = false;
+  secretField.placeholder = "Leave blank to keep the current secret";
+  secretHelp.classList.remove("hidden");
   notesField.value = entry.notes || "";
   dialog.showModal();
 }
@@ -272,6 +279,9 @@ function openEditDialog(id) {
 function closeDialog() {
   dialog.close();
   keyForm.reset();
+  secretField.required = true;
+  secretField.placeholder = "";
+  secretHelp.classList.add("hidden");
   state.editingId = null;
 }
 
@@ -376,15 +386,32 @@ lockBtn.addEventListener("click", handleLock);
 keyForm.addEventListener("submit", upsertKey);
 modalClose.addEventListener("click", closeDialog);
 
+function isEditableTarget(target) {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+  if (target.isContentEditable) {
+    return true;
+  }
+  const tagName = target.tagName;
+  return tagName === "INPUT" || tagName === "TEXTAREA" || tagName === "SELECT";
+}
+
 document.addEventListener("keydown", (event) => {
   if (!state.unlocked) {
+    return;
+  }
+  if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) {
+    return;
+  }
+  if (isEditableTarget(event.target)) {
     return;
   }
   if (event.key === "/" && !dialog.open) {
     event.preventDefault();
     searchInput.focus();
   }
-  if (event.key.toLowerCase() === "n" && !dialog.open) {
+  if (event.key === "n" && !dialog.open) {
     event.preventDefault();
     openNewDialog();
   }

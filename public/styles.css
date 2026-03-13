@@ -304,6 +304,12 @@ textarea {
   margin: 0;
 }
 
+.field-help {
+  color: var(--subtle);
+  font-size: 0.85rem;
+  margin: -4px 0 0;
+}
+
 @media (max-width: 680px) {
   .topbar {
     flex-direction: column;
