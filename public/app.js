@@ -411,10 +411,6 @@ document.addEventListener("keydown", (event) => {
     event.preventDefault();
     searchInput.focus();
   }
-  if (event.key === "n" && !dialog.open) {
-    event.preventDefault();
-    openNewDialog();
-  }
 });
 
 async function boot() {
